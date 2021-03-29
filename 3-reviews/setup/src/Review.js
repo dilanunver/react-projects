@@ -1,44 +1,31 @@
 import React, { useState } from 'react';
-import people from './data';
-import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa';
+import people from './data'
+import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa'
 
-const Review = () => {
 
-  const [index, setIndex] = useState(0);
-  const { name, job, image, text } = people[index];
+const Reviews = () => {
+  const [person, setPerson] = useState(0);
+  const { name, image, job, text } = people[person];
 
-  const checkNumber = (number) => {
-    if (number > people.length - 1) {
-      return 0;
+  const prevButton = () => {
+    let newPerson = person - 1;
+    if (newPerson < 0) {
+      let lastPerson = people.length - 1
+      return setPerson(lastPerson)
     }
-    if (number < 0) {
-      return people.length - 1
-    } return number;
+    return setPerson(newPerson)
   }
-
-  const randomPerson = () => {
-
-    let surprise = Math.floor(Math.random() * people.length)
-    if (surprise === index) {
-      surprise = index + 1;
+  const nextButton = () => {
+    let newPerson = person + 1;
+    console.log(newPerson)
+    if (newPerson > people.length - 1) {
+      let lastPerson = 0
+      return setPerson(lastPerson)
     }
-    setIndex(checkNumber(surprise))
+    return setPerson(newPerson)
   }
 
 
-  const nextPerson = () => {
-    setIndex((index) => {
-      let newIndex = index + 1;
-      return checkNumber(newIndex);
-    });
-  }
-
-  const prevPerson = () => {
-    setIndex((index) => {
-      let newIndex = index - 1;
-      return checkNumber(newIndex);
-    });
-  }
 
   return (
     <article className='review'>
@@ -52,16 +39,14 @@ const Review = () => {
       <p className='job'>{job}</p>
       <p className='info'>{text}</p>
       <div className='button-container'>
-        <button className='prev-btn' onClick={prevPerson}>
-          <FaChevronLeft></FaChevronLeft>
-        </button>
-        <button className='prev-btn' onClick={nextPerson}>
-          <FaChevronRight></FaChevronRight>
-        </button>
+        <button className='prev-btn' onClick={prevButton}><FaChevronLeft></FaChevronLeft> </button>
+        <button className='next-btn' onClick={nextButton}><FaChevronRight></FaChevronRight> </button>
       </div>
-      <button className='random-btn' onClick={randomPerson}>surprise me</button>
+      <button className='random-btn'>surprise me</button>
     </article>
   );
 };
-export default Review;
 
+
+
+export default Reviews;
