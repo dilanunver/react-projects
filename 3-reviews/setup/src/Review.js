@@ -25,6 +25,20 @@ const Reviews = () => {
     return setPerson(newPerson)
   }
 
+  const randomButton = () => {
+    let surpriseMe = Math.floor(Math.random() * people.length);
+    if (surpriseMe === person) {
+      let lastSurprise = person + 1;
+      if (lastSurprise > people.length - 1) {
+        let result = 0;
+        return setPerson(result)
+      }
+      return setPerson(lastSurprise)
+    }
+    return setPerson(surpriseMe)
+
+  }
+
 
 
   return (
@@ -42,7 +56,7 @@ const Reviews = () => {
         <button className='prev-btn' onClick={prevButton}><FaChevronLeft></FaChevronLeft> </button>
         <button className='next-btn' onClick={nextButton}><FaChevronRight></FaChevronRight> </button>
       </div>
-      <button className='random-btn'>surprise me</button>
+      <button className='random-btn' onClick={randomButton}>surprise me</button>
     </article>
   );
 };
