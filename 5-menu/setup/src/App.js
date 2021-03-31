@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
-import Menu from './Menu';
+import data from './data'
 import Categories from './Categories';
-import items from './data';
+import Menu from './Menu';
 
-const allCategories = ['all', ...new Set(items.map((item) => item.category))]
-console.log(allCategories)
+const App = () => {
+  const [foods, setFoods] = useState(data);
+  const [restFoods, setRestFoods] = useState(data)
+  console.log(restFoods)
 
+  const all = () => {
+    setFoods(restFoods)
+  }
+  const breakfast = () => {
+    const newBreakfast = restFoods.filter(item => item.category === 'breakfast');
+    setFoods(newBreakfast)
+  }
+  const lunch = () => {
+    const newLunch = restFoods.filter(item => item.category === 'lunch');
+    setFoods(newLunch)
+  }
+  const shakes = () => {
+    const newShakes = restFoods.filter(item => item.category === 'shakes');
+    setFoods(newShakes)
+  }
 
-function App() {
-  const [menuItems, setMenuItems] = useState(items);
-  const [categories, setCategories] = useState(allCategories);
-
-  const filterItems = (category) => {
-    if (category === 'all') {
-      setMenuItems(items)
-      return;
-    }
-    const newItems = items.filter((item) => item.category === category);
-    setMenuItems(newItems)
-  };
   return (
     <main>
       <section className='menu section'>
@@ -26,11 +31,20 @@ function App() {
           <h2>our menu</h2>
           <div className='underline'></div>
         </div>
-        <Categories filterItems={filterItems} categories={categories}></Categories>
-        <Menu items={menuItems}></Menu>
+        <Categories all={all} breakfast={breakfast} lunch={lunch} shakes={shakes} ></Categories>
+        {foods.map((food) => <Menu {...food} ></Menu>
+        )}
       </section>
     </main>
-  );
+  )
 }
 
-export default App;
+
+
+
+
+
+
+
+
+export default App
